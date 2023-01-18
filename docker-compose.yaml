@@ -33,7 +33,7 @@ services:
 # device, bluetooth
     network_mode: host
     command:
-      - /opt/Pozyx\ Creator\ Controller-2.1.0.AppImage
+      - "/opt/Pozyx\ Creator\ Controller-2.1.0.AppImage"
 
   core:
     extends: pozyx

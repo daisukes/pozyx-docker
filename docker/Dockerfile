@@ -15,7 +15,7 @@ RUN apt update && apt install -y \
 	xserver-xorg-video-all \
 	sudo
 
-RUN mkdir /opt
+WORKDIR /opt
 
 COPY Linux_Creator_Controller.zip Linux_Creator_Controller.zip 
 
