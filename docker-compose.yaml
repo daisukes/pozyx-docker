@@ -1,0 +1,48 @@
+version: "2.3"
+
+
+services:
+  pozyx:
+    build:
+      context: ./docker
+    environment:
+# display
+      - DISPLAY
+      - XAUTHORITY=/tmp/.docker.xauth
+      - NVIDIA_DRIVER_CAPABILITIES=compute,graphics,utility,video,display
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+# display
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth
+# device, bluetooth
+      - /dev:/dev
+      - /sys/devices:/sys/devices
+      - /run/dbus:/run/dbus
+      - /var/run/dbus:/var/run/dbus
+      - ./home:/home/developer
+# required for display or device
+    privileged: true
+# device, bluetooth
+    devices:
+      - /dev/dri
+# display
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+# device, bluetooth
+    network_mode: host
+    command:
+      - /opt/Pozyx\ Creator\ Controller-2.1.0.AppImage
+
+  core:
+    extends: pozyx
+    command:
+      - /opt/Binaries/core-creator
+#    ports:
+#      - 127.0.0.1:5000:5000
+
+  gateway:
+    extends: pozyx
+    command:
+      - /opt/Binaries/gateway-api
